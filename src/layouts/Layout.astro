@@ -7,9 +7,9 @@ interface Props {
 }
 
 const {
-	title = 'BlobPics | Picture Editing Studio in Perth',
+	title = 'BlobPics | AI Picture Editing Service in Perth',
 	description =
-		'BlobPics is a picture editing firm in Perth, Western Australia specializing in retouching, product image cleanup, and fast delivery for brands and creators.',
+		'BlobPics is an AI-powered picture editing service in Perth, Western Australia specializing in retouching, product image cleanup, and fast delivery for brands and creators.',
 } = Astro.props as Props;
 ---
 
@@ -103,6 +103,28 @@ const {
 
 				updateActiveControl();
 			})();
+		</script>
+
+		<script>
+			import Lenis from 'lenis';
+			import { gsap } from 'gsap';
+			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+			gsap.registerPlugin(ScrollTrigger);
+
+			const lenis = new Lenis({
+				lerp: 0.05, // Smooth Apple-like feeling
+				wheelMultiplier: 1,
+				smoothWheel: true,
+			});
+
+			lenis.on('scroll', ScrollTrigger.update);
+
+			gsap.ticker.add((time) => {
+				lenis.raf(time * 1000);
+			});
+
+			gsap.ticker.lagSmoothing(0);
 		</script>
 	</body>
 </html>
