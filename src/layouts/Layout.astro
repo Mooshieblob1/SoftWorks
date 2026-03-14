@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'SoftWorks | RAG Solutions for Accounting Firms in Perth',
+	description =
+		'SoftWorks helps accounting firms in Perth, Western Australia deploy practical Retrieval-Augmented Generation systems.',
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<script is:inline>
+			(() => {
+				const storageKey = 'theme-preference';
+				const validModes = new Set(['light', 'dark', 'auto']);
+				const storedMode = localStorage.getItem(storageKey);
+				const mode = validModes.has(storedMode) ? storedMode : 'auto';
+				document.documentElement.dataset.theme = mode;
+			})();
+		</script>
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+		<script is:inline>
+			(() => {
+				const storageKey = 'theme-preference';
+				const root = document.documentElement;
+				const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+				const getMode = () => {
+					const mode = root.dataset.theme;
+					return mode === 'light' || mode === 'dark' || mode === 'auto' ? mode : 'auto';
+				};
+
+				const updateActiveControl = () => {
+					const mode = getMode();
+					document.querySelectorAll('[data-theme-value]').forEach((button) => {
+						const value = button.getAttribute('data-theme-value');
+						button.setAttribute('aria-pressed', String(value === mode));
+					});
+					const select = document.querySelector('[data-theme-select]');
+					if (select instanceof HTMLSelectElement) {
+						select.value = mode;
+					}
+				};
+
+				const applyMode = (mode, persist) => {
+					root.dataset.theme = mode;
+					if (persist) {
+						localStorage.setItem(storageKey, mode);
+					}
+					updateActiveControl();
+				};
+
+				document.addEventListener('click', (event) => {
+					const target = event.target;
+					if (!(target instanceof HTMLElement)) {
+						return;
+					}
+					const control = target.closest('[data-theme-value]');
+					if (!(control instanceof HTMLElement)) {
+						return;
+					}
+					const mode = control.getAttribute('data-theme-value');
+					if (mode === 'light' || mode === 'dark' || mode === 'auto') {
+						applyMode(mode, true);
+					}
+				});
+
+				document.addEventListener('change', (event) => {
+					const target = event.target;
+					if (!(target instanceof HTMLSelectElement)) {
+						return;
+					}
+					if (!target.matches('[data-theme-select]')) {
+						return;
+					}
+					const mode = target.value;
+					if (mode === 'light' || mode === 'dark' || mode === 'auto') {
+						applyMode(mode, true);
+					}
+				});
+
+				mediaQuery.addEventListener('change', () => {
+					if (getMode() === 'auto') {
+						updateActiveControl();
+					}
+				});
+
+				updateActiveControl();
+			})();
+		</script>
+	</body>
+</html>
