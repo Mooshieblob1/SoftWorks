@@ -5,8 +5,8 @@
 	--text: #102126;
 	--muted: #4c626b;
 	--line: #d5e0e4;
-	--brand: #0c5f57;
-	--brand-strong: #08443f;
+	--brand: #1864ab;
+	--brand-strong: #0f4b82;
 	--on-brand: #ffffff;
 	color-scheme: light;
 }
@@ -18,9 +18,9 @@
 	--text: #e6f0f3;
 	--muted: #a6bcc4;
 	--line: #274047;
-	--brand: #66d1c1;
-	--brand-strong: #2a9f91;
-	--on-brand: #062722;
+	--brand: #7fc4ff;
+	--brand-strong: #4d9ce0;
+	--on-brand: #082844;
 	color-scheme: dark;
 }
 
@@ -36,9 +36,9 @@
 		--text: #e6f0f3;
 		--muted: #a6bcc4;
 		--line: #274047;
-		--brand: #66d1c1;
-		--brand-strong: #2a9f91;
-		--on-brand: #062722;
+		--brand: #7fc4ff;
+		--brand-strong: #4d9ce0;
+		--on-brand: #082844;
 	}
 }
 
